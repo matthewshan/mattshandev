@@ -16,7 +16,7 @@ Companion reference: [docs/page-component-map.md](docs/page-component-map.md)
 
 ## Runtime Setup
 
-- Package manager: the repo ships with `pnpm-lock.yaml`, but scripts are standard package scripts and also work with `npm`
+- Package manager: `package.json` declares `pnpm@10.32.1` and the repo ships with `pnpm-lock.yaml`; scripts are standard package scripts and also work with `npm`
 - Main scripts from `package.json`:
 
 ```bash

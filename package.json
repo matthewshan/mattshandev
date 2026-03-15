@@ -1,6 +1,7 @@
 {
-  "name": "@once-ui-system/magic-portfolio",
-  "version": "2.3.0",
+  "name": "mattshan.dev",
+  "version": "1.0.0",
+  "packageManager": "pnpm@10.32.1",
   "scripts": {
     "dev": "next dev",
     "export": "next export",
