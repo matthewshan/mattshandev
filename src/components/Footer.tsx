@@ -31,7 +31,6 @@ export const Footer = () => {
             </SmartLink>
           </Text>
           <Text paddingX="4">/ {person.name}</Text>
-
         </Text>
         <Row gap="16">
           {social.map(

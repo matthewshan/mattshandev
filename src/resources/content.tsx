@@ -52,9 +52,8 @@ const about: About = {
   intro: {
     display: true,
     title: "About",
-    description: (
-       "Experienced Software Engineer passionate about solving problems for users, businesses, and clients alike. Specialized in cloud-native backend development and microservices architectures in Azure and AWS."
-    ),
+    description:
+      "Experienced Software Engineer passionate about solving problems for users, businesses, and clients alike. Specialized in cloud-native backend development and microservices architectures in Azure and AWS.",
   },
   work: {
     display: true,
@@ -94,7 +93,7 @@ const about: About = {
           "Used Pandas, NumPy, Jupyter, and Matplotlib to train models and analyze performance.",
           "Awarded the P. Douglas Kindschi Undergraduate Research Fellowship in the Sciences.",
         ],
-      }
+      },
     ],
   },
   studies: {
@@ -118,7 +117,9 @@ const about: About = {
     skills: [
       {
         title: "Cloud and Platform",
-        description: <>Building and operating cloud-native systems across Azure, AWS, and Kubernetes.</>,
+        description: (
+          <>Building and operating cloud-native systems across Azure, AWS, and Kubernetes.</>
+        ),
         tags: [
           {
             name: "Azure",
@@ -136,7 +137,9 @@ const about: About = {
       },
       {
         title: "Backend and Application Development",
-        description: <>Designing APIs, services, and applications with modern .NET, TypeScript, and Python.</>,
+        description: (
+          <>Designing APIs, services, and applications with modern .NET, TypeScript, and Python.</>
+        ),
         tags: [
           {
             name: "C#",
@@ -154,7 +157,12 @@ const about: About = {
       },
       {
         title: "Delivery and Operations",
-        description: <>Shipping production systems through automated pipelines, containers, and observability-minded workflows.</>,
+        description: (
+          <>
+            Shipping production systems through automated pipelines, containers, and
+            observability-minded workflows.
+          </>
+        ),
         tags: [
           {
             name: "GitHub Actions",
@@ -169,7 +177,12 @@ const about: About = {
       },
       {
         title: "Data and Distributed Systems",
-        description: <>Working with distributed workflows, event streaming, and both relational and non-relational storage.</>,
+        description: (
+          <>
+            Working with distributed workflows, event streaming, and both relational and
+            non-relational storage.
+          </>
+        ),
         tags: [
           {
             name: "SQL",
@@ -187,7 +200,9 @@ const about: About = {
       },
       {
         title: "Applied AI and Research",
-        description: <>Applying machine learning tools in research and practical engineering contexts.</>,
+        description: (
+          <>Applying machine learning tools in research and practical engineering contexts.</>
+        ),
         tags: [
           {
             name: "AI/ML",

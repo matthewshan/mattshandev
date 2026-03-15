@@ -1,4 +1,7 @@
-import { notFound } from "next/navigation";
+import { CustomMDX, ScrollToHash } from "@/components";
+import { Projects } from "@/components/projects/Projects";
+import { about, baseURL, person, projects } from "@/resources";
+import { formatDate } from "@/utils/formatDate";
 import { getPosts } from "@/utils/utils";
 import {
   AvatarGroup,
@@ -12,11 +15,8 @@ import {
   SmartLink,
   Text,
 } from "@once-ui-system/core";
-import { baseURL, about, person, projects } from "@/resources";
-import { formatDate } from "@/utils/formatDate";
-import { ScrollToHash, CustomMDX } from "@/components";
 import type { Metadata } from "next";
-import { Projects } from "@/components/projects/Projects";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams(): Promise<{ slug: string }[]> {
   const posts = getPosts(["src", "app", "projects", "projects"]);
