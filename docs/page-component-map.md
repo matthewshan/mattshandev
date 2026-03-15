@@ -79,6 +79,8 @@ This route now owns the former about-page experience. It is primarily server-ren
 
 `Posts` loads and sorts MDX entries on the server. Individual post cards are client components.
 
+Blog cards render each post's frontmatter summary and tags when present.
+
 ### `/blog/[slug]`
 
 ```text
@@ -94,6 +96,8 @@ This route now owns the former about-page experience. It is primarily server-ren
 │   └── [C] Post
 └── [C] ScrollToHash
 ```
+
+The post header renders the frontmatter summary beneath the title when available.
 
 ### `/projects`
 

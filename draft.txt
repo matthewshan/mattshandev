@@ -1,0 +1,49 @@
+Hello all! Welcome to my first blog post on this website. I’m really excited to get my hands into this.
+
+Background
+
+So, if you’re the type of person who likes to read the long winded backstories on peoples recipes, here’s the right section for you ;)
+
+If not and you want to skip to the technical part of this? Don’t blame you.. Click here 
+
+For the longest time, I’ve always wanted to build my own portfolio or blog site on Vercel. What’s been my biggest blocker? The motivation to dive into designing the front end (at least in my personal time / outside of a professional setting). Sure there are LOADS of templates out there, but I’ve found molding the template to my needs to be mind numbing. 
+
+This weekend I decided to finally tackle it, and I managed to get it up and running in less than aday. What’s different this time? Context engineering and LLMs are now advance enough to reliability handle these tasks I’ve found boring in the past 
+
+At a high level, this site is powered by NextJS and Vercel. I’ve had experience in NextJS in the past; and Vercel truly makes it mind numbingly easy to get started. 
+
+I made it a little more fun for myself by bootstrapping my Vercel project using Terraform. I also wrote GitHub Workflow for pull request checks that Lints and Builds the application before I can merge int main. 
+
+# Retracing my steps
+
+Step 1. Follow instructions of Magic Portfolio
+Include link 
+Call out pnpm 
+
+Step 2. Lay the ground work for the LLM
+Document
+Copilot Instructions  
+Skills
+
+Step 2. Striping out what I didn’t need / want
+Update what I wanted 
+home page / about page 
+Gallery page 
+Password protected pages
+Copied resume lines to about page
+
+Step 3. Deployment
+pushed code after testing 
+Developed terraform for bootstrapping 
+
+Step 4. PR Checks 
+noticed Vercel did some handy stuff 
+Don’t want to push bad changes to my site
+Added branch policies and PR Checks 
+
+
+Next steps: 
+Resume JSON to schema directly 
+
+Playwright testing 
+Daily check on site 
