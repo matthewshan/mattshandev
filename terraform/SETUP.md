@@ -129,47 +129,6 @@ After the project is connected:
 - push to `main` for a production deployment
 - push to other branches for preview deployments
 
-## 11a. Optional release-based production deployments with GitHub Actions
-
-This repo now includes `.github/workflows/vercel-release-deploy.yml`.
-
-That workflow:
-
-- runs when a GitHub release is published
-- checks out the exact release tag
-- pulls the Vercel project settings
-- builds with the Vercel CLI
-- deploys the prebuilt artifact to production
-
-Required GitHub Actions secrets:
-
-- `VERCEL_TOKEN`
-- `VERCEL_ORG_ID`
-- `VERCEL_PROJECT_ID`
-
-You can retrieve `VERCEL_PROJECT_ID` from the Terraform outputs:
-
-```bash
-terraform output vercel_project_id
-```
-
-If you want GitHub releases to be the only production deployment trigger, do not leave `production_branch = "main"` in Vercel. Instead, change the Terraform variable to a branch you do not use for normal pushes, then apply Terraform again:
-
-```hcl
-production_branch = "release"
-```
-
-Then run:
-
-```bash
-terraform apply -var-file="mattshandev.tfvars"
-```
-
-With that setup:
-
-- pushes to normal branches still create preview deployments through the Vercel Git integration
-- published GitHub releases create production deployments through GitHub Actions
-
 ## 12. Ongoing Terraform usage
 
 Use these commands for future changes:
@@ -184,3 +143,7 @@ If you ever create the Vercel project manually and need Terraform to take it ove
 ```bash
 terraform import vercel_project.portfolio prj_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+
+## Note about DNS configuration
+
+DNS records for your custom domain must be created or updated at your DNS provider. Use the records shown in the Vercel dashboard, then wait for DNS propagation and Vercel domain verification to complete.
