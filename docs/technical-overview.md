@@ -16,7 +16,7 @@ Companion reference: [docs/page-component-map.md](docs/page-component-map.md)
 
 ## Runtime Setup
 
-- Package manager: the repo ships with `pnpm-lock.yaml`, but scripts are standard package scripts and also work with `npm`
+- Package manager: `package.json` declares `pnpm@10.32.1` and the repo ships with `pnpm-lock.yaml`; scripts are standard package scripts and also work with `npm`
 - Main scripts from `package.json`:
 
 ```bash
@@ -34,6 +34,7 @@ pnpm biome-write
 
 - Hosting target: Vercel
 - Infrastructure provisioning: Terraform under `terraform/`
+- Pull request CI: `.github/workflows/pull-request.yml` installs dependencies with pnpm and runs `pnpm run lint` plus `pnpm run build` for every pull request
 - Release automation: `.github/workflows/vercel-release-deploy.yml` deploys published GitHub releases to Vercel with the Vercel CLI
 
 The current Terraform config links the GitHub repository to the Vercel project and sets a production branch. If release-driven deployments are intended to be the only production trigger, the configured Vercel production branch should not be an actively used branch such as `main`, otherwise Vercel will still create a production deployment for direct pushes to that branch.
