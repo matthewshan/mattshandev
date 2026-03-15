@@ -17,7 +17,7 @@ export type PostMetadata = {
   summary: string;
   image?: string;
   images: string[];
-  tag?: string;
+  tags?: string[];
   team: TeamMember[];
   link?: string;
 };
@@ -43,6 +43,11 @@ function readMDXFile(filePath: string) {
 
   const rawContent = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(rawContent);
+  const tags = Array.isArray(data.tags)
+    ? data.tags.filter((value): value is string => typeof value === "string")
+    : typeof data.tag === "string"
+      ? [data.tag]
+      : [];
 
   const metadata: PostMetadata = {
     title: data.title || "",
@@ -51,7 +56,7 @@ function readMDXFile(filePath: string) {
     summary: data.summary || "",
     image: data.image || "",
     images: data.images || [],
-    tag: data.tag || [],
+    tags,
     team: data.team || [],
     link: data.link || "",
   };

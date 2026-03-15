@@ -159,7 +159,7 @@ publishedAt: string
 summary: string
 image: string
 images: string[]
-tag: string
+tags: string[]
 team:
   - name: string
     role: string
@@ -167,6 +167,8 @@ team:
     linkedIn: string
 link: string
 ```
+
+The loader accepts both legacy `tag: string` and current `tags: string[]` frontmatter, but normalizes everything to `metadata.tags` at runtime.
 
 Projects can now omit `images` without breaking list or detail rendering. `ProjectCard` and the project detail page both guard against empty media arrays.
 

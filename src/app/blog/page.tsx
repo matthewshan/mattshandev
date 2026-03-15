@@ -1,5 +1,6 @@
 import { Posts } from "@/components/blog/Posts";
 import { baseURL, blog, person } from "@/resources";
+import { getPosts } from "@/utils/utils";
 import { Column, Heading, Meta, Schema } from "@once-ui-system/core";
 
 export async function generateMetadata() {
@@ -13,6 +14,8 @@ export async function generateMetadata() {
 }
 
 export default function Blog() {
+  const hasEarlierPosts = getPosts(["src", "app", "blog", "posts"]).length > 3;
+
   return (
     <Column maxWidth="m" paddingTop="24">
       <Schema
@@ -34,10 +37,14 @@ export default function Blog() {
       <Column fillWidth flex={1} gap="40">
         <Posts range={[1, 1]} thumbnail />
         <Posts range={[2, 3]} columns="2" thumbnail direction="column" />
-        <Heading as="h2" variant="heading-strong-xl" marginLeft="l">
-          Earlier posts
-        </Heading>
-        <Posts range={[4]} columns="2" />
+        {hasEarlierPosts && (
+          <>
+            <Heading as="h2" variant="heading-strong-xl" marginLeft="l">
+              Earlier posts
+            </Heading>
+            <Posts range={[4]} columns="2" />
+          </>
+        )}
       </Column>
     </Column>
   );
