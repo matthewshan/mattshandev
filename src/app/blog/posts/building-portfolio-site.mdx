@@ -1,0 +1,147 @@
+---
+title: "Building My Portfolio Site in just a Saturday afternoon/evening"
+publishedAt: "2026-03-15"
+summary: "How I finally shipped a personal portfolio w/ Magic Portfolio, Vercel, and Context Engineering"
+tags:
+  - "Next.js"
+  - "Context Engineering"
+  - "Vercel"
+  - "Terraform"
+  - "GitHub Actions"
+---
+
+
+## The Backstory
+
+Hello all! Welcome to my first real blog post on this site.
+
+I have wanted to build a personal portfolio for a long time. I've found myself setting up projects with various front-end frameworks with excitement, thought about how I wanted to design my code, and then got bored pretty quickly staring at and setting up .tsx files. As someone who focuses on backend, cloud, and DevOps, that has always been the blocker for me. It was never the hosting, or the framework, or even the content. I have experience doing all of these things. It was the activation energy of making the front end feel decent. 
+
+There are plenty of templates out there, but I have usually found myself facing the same problem I run into when starting from scratch. You still have to understand how it is put together, decide what to keep, strip out what does not fit, and reshape it into something that actually feels like your site instead of someone else's demo with your name dropped in.
+
+This weekend I finally decided to just do it. One of my colleagues had mentioned Vercel during a call and it reminded me that I had always wanted to host a Next.JS personal site on there.
+
+The difference this time was that I stopped treating all of the front-end cleanup as a solo manual task. Context engineering and LLM tooling are good enough now to reliably take a lot of the mind-numbing work (at least to me) out of standing up a personal site, especially when the work is mostly restructuring, refactoring, and tightening content.
+
+## Retracing My Steps
+
+### 1. Start with the template and get to running code fast
+
+I started from [Magic Portfolio](https://github.com/once-ui-system/magic-portfolio), which gave me a solid baseline: Next.js, MDX-backed content, and a polished Once UI component layer.
+
+The setup itself was straightforward. I followed the template instructions and got to a base running site quickly. The only thing I did differently was use `pnpm` instead of `npm`.
+
+### 2. Document the repo so the tooling can be useful
+
+At work, I have really seen and utilized the power of feeding LLM’s the right context. I wanted to do the same here with GitHub Copilot. At the time of writing, I used GPT 5.4 since it's powerful and cost-effective (though I typically use Claude Opus 4.6 at work for complex tasks). 
+
+I created three .md files (with AI) in `docs/` of the repository. 
+- [docs/technical-overview.md](https://github.com/matthewshan/mattshandev/blob/main/docs/technical-overview.md) documents the repo’s technical setup and architecture.
+- [docs/page-component-map.md](https://github.com/matthewshan/mattshandev/blob/main/docs/page-component-map.md) provides a picture of how the codebase is structured. 
+- Finally, since I was using GitHub Copilot, I added this [.github/copilot-instructions.md](https://github.com/matthewshan/mattshandev/blob/main/.github/copilot-instructions.md) file. It tells Copilot toto use the above .md files, and make updates to them as we develop.
+
+Once the architecture and conventions were documented, a lot of the repetitive cleanup work becomes much easier to hand off to Copilot.
+
+### 3. Strip out the parts I did not want
+This is where the project started feeling like mine instead of a template demo. Compared to the upstream Magic Portfolio repo, I simplified the site pretty aggressively.
+
+The original template has separate routes for things like `about`, `work`, and `gallery`, plus optional features like newsletter wiring and password-protected routes. 
+
+What I Changed with Copilot:
+
+- The root route now owns the about/profile experience instead of keeping that on a separate home page that I wouldn't use
+- Route gating is still config-driven, but the current `RouteGuard` is much simpler without the upstream password-protection flow
+- The `work` section was renamed to a `projects` section. It exists in the app, but it is currently disabled in route config while I continue shaping content around it
+- I removed the newsletter feature. I don't think I have a big enough following for that to be realistically used and appreciated
+
+I also manually replaced the stock placeholder content with my own background, work history, education, and technical skills. A lot of that was driven from my resume and then reorganized into the content structure this app expects. Instructions on how to interact with their template can be found on the [Magic Portfolio demo site](https://demo.magic-portfolio.com/blog).
+
+That ended up being a great middle ground: structured enough for the site to stay consistent, but not so rigid that updating it feels like editing a CMS.
+
+### 4. Deploy it with Terraform instead of clicking through the dashboard
+
+Vercel makes it super easy to click buttons and get things up and running. But I still wanted the initial project wiring to live in code. This might be overkill for this tiny project, but I have a bias toward having the git repository be the source of truth. That makes things easier later when I inevitably forget what I did this weekend.
+
+If you do not care for Terraform, you can just as easily set this up yourself via [ClickOps in the Vercel UI](https://vercel.com/docs/git#deploying-a-git-repository).
+
+If you do care, take a look at my code and setup instructions [here](https://github.com/matthewshan/mattshandev/blob/main/terraform/SETUP.md).
+
+The meat and bones of it are in [terraform/main.tf](https://github.com/matthewshan/mattshandev/blob/main/terraform/main.tf):
+
+<CodeBlock
+  marginTop="8"
+  marginBottom="16"
+  copyButton={true}
+  codes={[
+    {
+      language: "hcl",
+      label: "Terraform",
+      code: `resource "vercel_project" "portfolio" { # creates a project in Vercel
+    name      = var.project_name
+    framework = "nextjs"
+
+    git_repository = {
+        type              = "github"
+        repo              = var.github_repo # points to this repository for deployments
+        production_branch = var.production_branch # indicates which branch to use for production deployments
+    }
+
+    automatically_expose_system_environment_variables = true
+}
+
+resource "vercel_project_domain" "production" { # attaches my custom domain to the project
+    count = var.custom_domain == null ? 0 : 1
+
+    project_id = vercel_project.portfolio.id
+    domain     = var.custom_domain
+}`,
+    },
+  ]}
+/>
+
+Here's documentation on these resources, from the Vercel official provider:
+- [vercel_project](https://registry.terraform.io/providers/Vercel/vercel/latest/docs/resources/project)
+- [vercel_project_domain](https://registry.terraform.io/providers/Vercel/vercel/latest/docs/resources/project_domain)
+
+Once this was set up, pushing new commits to `main` would "automagically" build and deploy the latest version of the site.
+
+
+### 5. Add pull request checks (I don't always trust myself)
+
+One thing Vercel does very well is making this process effortless. That is great right up until you realize it is also very easy to ship something broken. One of these late evenings, I would have definitely forget to lint and build the code before pushing.
+
+So I added some standard guardrails:
+- You are not allowed to push to `main` directly. You must create a pull request.
+- When you create a pull request, a GitHub workflow runs lint and build checks for the project. See [pull-request.yml](https://github.com/matthewshan/mattshandev/blob/main/.github/workflows/pull-request.yml).
+- An unintended but useful side effect is that Vercel creates a preview deployment from your branch that you can open and test before merging. Neat!
+
+![Vercel preview deployment generated for a pull request](/images/blog/building-portfolio-site/vercel-preview.png)
+
+## 6. Write this blog post
+
+Once I got the site up and running, I needed a blog post to make it look alive. I was always the guy who despised writing essays in school, so I decided to write this post with some AI help
+
+First I typed up an outline and drafted sections I know I wanted to write by hand. 
+
+Then I had Copilot create a skill to help me write this post: [create-blog-post](https://github.com/matthewshan/mattshandev/blob/main/.github/skills/create-blog-post/SKILL.md). If you don't know what a skill is, check out this talk from Anthropic: [here](https://www.youtube.com/watch?v=CEvIs9y1uog).
+
+The skill got me about 70% of the way there. It helped me flesh out some sections I might have skipped and gave me more ideas for improving the flow of the article. Although I rewrote pretty much everything it put down, it worked out since I did not want AI to completely write this post for me. The biggest value for me was getting past the writer's block that I usually struggle with.
+
+## Conclusion
+
+Just like that, I managed to build and deploy my very own personal site, which I’ve been putting off for years, in just a Saturday afternoon/evening.
+
+What’s next? I have a few more ideas to improve the site in the future. 
+
+- Connect my resume JSON more directly to structured schema and content where it makes sense
+- Add Playwright testing so I am not relying only on lint and build checks
+- Add some kind of recurring health check so the site tells me when something drifts or breaks
+
+That said, I've achieved the goal I set out:
+
+- The site exists.
+- It is deployed.
+- It is maintainable.
+- And now I have a place to write.
+
+Hope this post helps some of you all learn something new!
