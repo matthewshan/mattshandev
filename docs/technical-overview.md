@@ -30,6 +30,14 @@ pnpm biome-write
 - `next.config.mjs` enables MDX page extensions, transpiles `next-mdx-remote`, and configures Sass support
 - `tsconfig.json` defines the `@/*` alias to `src/*`
 
+## Deployment
+
+- Hosting target: Vercel
+- Infrastructure provisioning: Terraform under `terraform/`
+- Release automation: `.github/workflows/vercel-release-deploy.yml` deploys published GitHub releases to Vercel with the Vercel CLI
+
+The current Terraform config links the GitHub repository to the Vercel project and sets a production branch. If release-driven deployments are intended to be the only production trigger, the configured Vercel production branch should not be an actively used branch such as `main`, otherwise Vercel will still create a production deployment for direct pushes to that branch.
+
 ## High-Level Structure
 
 ```text
