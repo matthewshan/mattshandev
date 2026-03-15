@@ -1,0 +1,486 @@
+{
+  "picture": {
+    "hidden": false,
+    "url": "https://rxresu.me/uploads/019ce9e7-c93c-77dd-9168-1a2c184f264f/pictures/1773460445890.webp",
+    "size": 80,
+    "rotation": 0,
+    "aspectRatio": 1,
+    "borderRadius": 0,
+    "borderColor": "rgba(0, 0, 0, 0.5)",
+    "borderWidth": 0,
+    "shadowColor": "rgba(0, 0, 0, 0.5)",
+    "shadowWidth": 0
+  },
+  "basics": {
+    "name": "Matthew Shan",
+    "headline": "Software Engineer",
+    "email": "matthewshan99@gmail.com",
+    "location": "Grand Rapids, MI",
+    "website": {
+      "url": "",
+      "label": ""
+    },
+    "customFields": []
+  },
+  "summary": {
+    "title": "",
+    "columns": 1,
+    "hidden": false,
+    "content": "<p>Experienced Software Engineer passionate about solving problems for users, businesses, and clients alike. Specialized in cloud-native backend development and microservices architectures in Azure and AWS.</p>"
+  },
+  "sections": {
+    "profiles": {
+      "title": "",
+      "columns": 2,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019cea7b-5942-736f-8790-aa6bd72268c7",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": false
+          },
+          "icon": "acorn",
+          "network": "LinkedIn",
+          "username": "matthewshan99",
+          "website": {
+            "url": "https://www.linkedin.com/in/matthewshan99/",
+            "label": ""
+          }
+        },
+        {
+          "id": "019cea7e-518a-753b-8751-fea793b1fcb1",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": false
+          },
+          "icon": "acorn",
+          "network": "GitHub",
+          "username": "matthewshan",
+          "website": {
+            "url": "https://github.com/matthewshan",
+            "label": ""
+          }
+        }
+      ]
+    },
+    "experience": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019cea7c-6df6-70d9-afff-cd586df9fd06",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": true
+          },
+          "company": "Meijer",
+          "position": "Software Engineer",
+          "location": "Walker, MI",
+          "period": "April 2024 to Present",
+          "website": {
+            "url": "https://www.meijer.com/",
+            "label": ""
+          },
+          "description": "<ul><li><p>Designed and developed .NET 10 RESTful APIs and event-driven applications for e-commerce services.</p></li><li><p>Managed Azure infrastructure using Terraform Infrastructure as Code (IaC) to enable modular deployments.</p></li><li><p>Created and maintained CI/CD pipelines using Azure DevOps YAML pipelines and GitHub Actions.</p></li><li><p>Containerized applications using Docker, deploying to OpenShift and Azure Container Apps.</p></li><li><p>Leveraged Temporal and Kafka to orchestrate complex distributed workflows, improving system reliability and event-driven communication across microservices.</p></li><li><p>Implemented modern internal web applications using Next.js/React, Zustand, and Tailwind CSS.</p></li><li><p>Azure services used: Functions, App Services, RedHat OpenShift, CosmosDB, Key Vault, App Configuration, APIM, Service Bus, Blob Storage, App Insights, and Container Apps.</p></li></ul><p></p>",
+          "roles": []
+        },
+        {
+          "id": "019ceac2-8d0c-7449-a636-e211d5a09cbe",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": true
+          },
+          "company": "Vervint",
+          "position": "IoT Consultant",
+          "location": "Grand Rapids, MI",
+          "period": "April 2022 to April 2024",
+          "website": {
+            "url": "https://vervint.com/",
+            "label": ""
+          },
+          "description": "<ul><li><p>Collaborated with clients in the architecture, development, and deployment of IoT Platforms on Azure and AWS.</p></li><li><p>Developed backend systems using C# and Node.js.</p></li><li><p>Ensured quality of code using the XUnit/Moq (C#) and Jest (TypeScript) testing frameworks.</p></li><li><p>Secured applications and devices using X.509 TLS/SSL Certificates and OAuth 2.0 JWT Tokens.</p></li><li><p>Implemented improvements to internal device management web application using Angular and TypeScript.</p></li><li><p>Azure Services Used: Azure Functions, APIM, CosmosDb, App Configuration, Key Vault, Service Bus, Event Grid, IoT Hub, Bicep, Storage Accounts, Notification Hubs and Azure Identity.</p></li><li><p>AWS Services Used: Lambda, API Gateway, DynamoDb, SQS, S3, IoT Core, CloudFormation, IaM, CloudWatch, Parameter Store, Cognito, Athena, and CloudFront.</p></li></ul><p></p>",
+          "roles": []
+        }
+      ]
+    },
+    "education": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019ceaa0-92aa-70ec-99df-88755e652f93",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": false
+          },
+          "school": "Grand Valley State University",
+          "degree": "Computer Science",
+          "area": "Bachelor of Science",
+          "grade": "3.99 GPA",
+          "location": "Allendale, MI",
+          "period": "2017 to 2021",
+          "website": {
+            "url": "",
+            "label": ""
+          },
+          "description": "<p>Minors: Data Science and Mathematics. Honors Student. Computing Club President.</p>"
+        }
+      ]
+    },
+    "projects": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019ceb04-d8da-7575-b840-99237e230a5f",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": false
+          },
+          "name": "Home Lab",
+          "period": "Ongoing",
+          "website": {
+            "url": "",
+            "label": ""
+          },
+          "description": "<ul><li><p>Ongoing Kubernetes (K3s) single node cluster running in a Proxmox Virtual Machine.</p></li><li><p>Deployed containerized applications such as n8n for personal use.</p></li><li><p>Configured GitOps via ArgoCD, enabling declarative infrastructure management and automated deployments.</p></li><li><p>Enabled observibility using Grafana Cloud and Alloy collectors for metrics, logs, and traces.</p></li><li><p>Wired up simple private networking with Twingate, allowing myself to access my applications and the Kubernetes API from networks away from home.</p></li></ul><p></p>"
+        }
+      ]
+    },
+    "skills": {
+      "title": "",
+      "columns": 5,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019ceaa2-c368-74b0-bfb8-c1a64c8d3cdc",
+          "hidden": false,
+          "icon": "cloud",
+          "name": "Azure",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa5-b2ad-7768-a71f-e0a3f2d27b3a",
+          "hidden": false,
+          "icon": "cloud",
+          "name": "AWS",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa5-da83-77e8-a38d-590f4b4af322",
+          "hidden": false,
+          "icon": "cube",
+          "name": "Kubernetes",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaad-29c1-763a-9666-0c5a709f682c",
+          "hidden": false,
+          "icon": "package",
+          "name": "Terraform",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa8-2a98-77dd-bd12-8a204dcd0856",
+          "hidden": false,
+          "icon": "code",
+          "name": "C#",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa8-cd7d-75fa-a9ee-ebf61d522cda",
+          "hidden": false,
+          "icon": "code",
+          "name": "Python",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa8-f934-7273-8ebb-9f31a5d60e0f",
+          "hidden": false,
+          "icon": "code",
+          "name": "TypeScript",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa9-32fa-7260-b8c6-8ebce4a551d6",
+          "hidden": false,
+          "icon": "code",
+          "name": "Next.JS",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaa9-9dd3-706f-9594-020c2e851359",
+          "hidden": false,
+          "icon": "rocket-launch",
+          "name": "GitHub Actions",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaaa-5c95-71f6-93ec-a7797b31300b",
+          "hidden": false,
+          "icon": "rocket-launch",
+          "name": "Azure DevOps",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceab1-47d7-7203-aa64-dd3dc4f406dd",
+          "hidden": false,
+          "icon": "database",
+          "name": "SQL",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceab1-1c5b-7328-aeb8-3875dc34d831",
+          "hidden": false,
+          "icon": "database",
+          "name": "NoSQL",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceaaf-fc2a-72cd-b1b5-d325e58a54b0",
+          "hidden": false,
+          "icon": "timer",
+          "name": "Temporal",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceab0-2cce-7541-89cd-6e7510c25150",
+          "hidden": false,
+          "icon": "share-network",
+          "name": "Kafka",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        },
+        {
+          "id": "019ceb01-47a6-74d8-9a71-e8751657ab9c",
+          "hidden": false,
+          "icon": "brain",
+          "name": "AI/ML",
+          "proficiency": "",
+          "level": 0,
+          "keywords": []
+        }
+      ]
+    },
+    "languages": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019ceb01-c1aa-7249-b715-961a7f9a4d9e",
+          "hidden": false,
+          "language": "Chinese",
+          "fluency": " Limited Working Proficiency",
+          "level": 0
+        }
+      ]
+    },
+    "interests": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "awards": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "certifications": {
+      "title": "Certifications",
+      "columns": 2,
+      "hidden": false,
+      "items": []
+    },
+    "publications": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": [
+        {
+          "id": "019ceaab-18d4-75db-9693-570c0b4d6384",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": true
+          },
+          "title": "MorphWorld: A State Transition Simulator",
+          "publisher": "Artificial Life Conference Proceedings - MIT Press",
+          "date": "2020",
+          "website": {
+            "url": "https://direct.mit.edu/isal/proceedings/isal2020/32/747/98410?guestAccessKey=",
+            "label": ""
+          },
+          "description": ""
+        }
+      ]
+    },
+    "volunteer": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    },
+    "references": {
+      "title": "",
+      "columns": 1,
+      "hidden": false,
+      "items": []
+    }
+  },
+  "customSections": [
+    {
+      "title": "Additional Experience",
+      "columns": 1,
+      "hidden": false,
+      "id": "019ceacb-22c5-72f9-a72d-bb9f8bcb91ac",
+      "type": "experience",
+      "items": [
+        {
+          "id": "019cead7-224b-746e-b3b4-7a124d7f1be4",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": true
+          },
+          "company": "Grand Valley State University",
+          "position": "AI Research Assistant ",
+          "location": "Allendale, MI",
+          "period": "September 2019 to May 2021",
+          "website": {
+            "url": "https://www.gvsu.edu/",
+            "label": ""
+          },
+          "description": "<ul><li><p>Co-authored \"MorphWorld: A State Transition Simulator\".</p></li><li><p>Developed and trained multiple deep learning genetic algorithms with PyTorch.</p></li><li><p>Used Pandas, NumPy, Jupyter, and Matplotlib to train models and track/visualize performance.</p></li><li><p>Awarded P. Douglas Kindschi Undergraduate Research Fellowship in the Sciences.</p></li></ul><p></p>",
+          "roles": []
+        },
+        {
+          "id": "019ceada-b4a3-76f4-82d9-44cde2dd23fb",
+          "hidden": false,
+          "options": {
+            "showLinkInTitle": true
+          },
+          "company": "Meijer",
+          "position": "Software Development Internship",
+          "location": "Walker, MI",
+          "period": "Summer of 2019 and 2020",
+          "website": {
+            "url": "https://www.meijer.com/",
+            "label": ""
+          },
+          "description": "<ul><li><p>Engaged with an architectural runway team by assisting in the elimination of technical debt.</p></li><li><p>Migrated .NET Framework applications to .NET Core 3.</p></li><li><p>Developed a modern web applications using ASP.NET Core and Blazor server.</p></li><li><p>Utilized Azure Functions and Azure Table Storage for new backend services.</p></li><li><p>Integrated with Microsoft SQL, DB2 and Sybase using Entity Framework and stored procedures.</p></li><li><p>Presented experiences to C-Suite and executive leaderhip.</p></li></ul><p></p>",
+          "roles": []
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "template": "lapras",
+    "layout": {
+      "sidebarWidth": 35,
+      "pages": [
+        {
+          "fullWidth": false,
+          "main": [
+            "summary",
+            "experience",
+            "skills",
+            "education"
+          ],
+          "sidebar": []
+        },
+        {
+          "fullWidth": false,
+          "main": [
+            "projects",
+            "publications",
+            "019ceacb-22c5-72f9-a72d-bb9f8bcb91ac",
+            "certifications",
+            "profiles",
+            "languages",
+            "references",
+            "awards",
+            "volunteer",
+            "interests"
+          ],
+          "sidebar": []
+        }
+      ]
+    },
+    "css": {
+      "enabled": false,
+      "value": ""
+    },
+    "page": {
+      "gapX": 4,
+      "gapY": 6,
+      "marginX": 14,
+      "marginY": 12,
+      "format": "a4",
+      "locale": "en-US",
+      "hideIcons": false
+    },
+    "design": {
+      "level": {
+        "icon": "",
+        "type": "hidden"
+      },
+      "colors": {
+        "primary": "rgba(0, 166, 62, 1)",
+        "text": "rgba(0, 0, 0, 1)",
+        "background": "rgba(255, 255, 255, 1)"
+      }
+    },
+    "typography": {
+      "body": {
+        "fontFamily": "IBM Plex Serif",
+        "fontWeights": [
+          "400",
+          "500"
+        ],
+        "fontSize": 10,
+        "lineHeight": 1.5
+      },
+      "heading": {
+        "fontFamily": "IBM Plex Serif",
+        "fontWeights": [
+          "600"
+        ],
+        "fontSize": 14,
+        "lineHeight": 1.5
+      }
+    },
+    "notes": ""
+  }
+}
