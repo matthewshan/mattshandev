@@ -93,4 +93,6 @@ These files document the current architecture and are a better reference than th
 
 ## License
 
-This project inherits the upstream license included in this repository. See `LICENSE` for the current terms.
+This project inherits the upstream license included in this repository. See `LICENSE` for the current terms. 
+
+This repository was originally forked from [Magic Portfolio](https://github.com/once-ui-system/magic-portfolio), and has been modified and updated to my own needs.
