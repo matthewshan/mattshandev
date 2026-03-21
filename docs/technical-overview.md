@@ -25,6 +25,7 @@ pnpm build
 pnpm start
 pnpm lint
 pnpm biome-write
+pnpm test:e2e
 ```
 
 - `next.config.mjs` enables MDX page extensions, transpiles `next-mdx-remote`, and configures Sass support
@@ -34,7 +35,8 @@ pnpm biome-write
 
 - Hosting target: Vercel
 - Infrastructure provisioning: Terraform under `terraform/`
-- Pull request CI: `.github/workflows/pull-request.yml` installs dependencies with pnpm and runs `pnpm run lint` plus `pnpm run build` for every pull request
+- Pull request CI: `.github/workflows/pull-request.yml` installs dependencies with pnpm, installs Chromium for Playwright, and runs `pnpm run lint`, `pnpm run test:e2e`, and `pnpm run build` for every pull request
+- Daily production monitoring: `.github/workflows/daily-production-smoke-test.yml` runs the Playwright smoke suite against `https://mattshan.dev` every day at 13:00 UTC, can be pointed at another target with the `base_url` workflow-dispatch input or `BASE_URL` environment variable, and sends failure email through the repository `SMTP_*` secrets when configured
 - Release automation: `.github/workflows/vercel-release-deploy.yml` deploys published GitHub releases to Vercel with the Vercel CLI
 
 The current Terraform config links the GitHub repository to the Vercel project and sets a production branch. If release-driven deployments are intended to be the only production trigger, the configured Vercel production branch should not be an actively used branch such as `main`, otherwise Vercel will still create a production deployment for direct pushes to that branch.

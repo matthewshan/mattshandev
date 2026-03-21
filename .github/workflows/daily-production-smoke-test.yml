@@ -1,0 +1,60 @@
+name: Daily Production Smoke Test
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL to test"
+        required: false
+        default: "https://mattshan.dev"
+
+jobs:
+  smoke-test:
+    name: Smoke test mattshan.dev
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      BASE_URL: ${{ github.event.inputs.base_url || 'https://mattshan.dev' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run Playwright smoke test
+        run: pnpm run test:e2e
+
+      - name: Send failure email
+        if: ${{ failure() && secrets.SMTP_SERVER != '' && secrets.SMTP_USERNAME != '' && secrets.SMTP_PASSWORD != '' }}
+        uses: dawidd6/action-send-mail@v16
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT || 587 }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Daily smoke test failed for ${{ env.BASE_URL }}
+          to: matthewshan99@gmail.com
+          from: ${{ secrets.SMTP_FROM || secrets.SMTP_USERNAME }}
+          html_body: |
+            <p>The daily Playwright smoke test failed for <strong>${{ env.BASE_URL }}</strong>.</p>
+            <p>Repository: <a href="${{ github.server_url }}/${{ github.repository }}">${{ github.repository }}</a></p>
+            <p>Workflow run: <a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">View failure details</a></p>
