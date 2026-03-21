@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const localBaseURL = "http://127.0.0.1:3000";
+const localHost = "127.0.0.1";
+const localPort = 3000;
+const localBaseURL = `http://${localHost}:${localPort}`;
 const baseURL = process.env.BASE_URL || localBaseURL;
 
 export default defineConfig({
@@ -23,7 +25,7 @@ export default defineConfig({
   webServer: process.env.BASE_URL
     ? undefined
     : {
-        command: "pnpm dev --hostname 127.0.0.1 --port 3000",
+        command: `pnpm dev --hostname ${localHost} --port ${localPort}`,
         url: localBaseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,
