@@ -1,19 +1,23 @@
-name: Pull Request Checks
+name: Daily Production Smoke Test
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-
-concurrency:
-  group: pull-request-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL to test"
+        required: false
+        default: "https://mattshan.dev"
 
 jobs:
-  build:
-    name: Lint and Build
+  smoke-test:
+    name: Smoke test mattshan.dev
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      BASE_URL: ${{ github.event.inputs.base_url || 'https://mattshan.dev' }}
 
     steps:
       - name: Checkout code
@@ -36,11 +40,5 @@ jobs:
       - name: Install Playwright browser
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run lint
-        run: pnpm run lint
-
       - name: Run Playwright smoke test
         run: pnpm run test:e2e
-
-      - name: Run build
-        run: pnpm run build
