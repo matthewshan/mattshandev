@@ -9,10 +9,6 @@ on:
         description: "Base URL to test"
         required: false
         default: "https://mattshan.dev"
-      alert_email_to:
-        description: "Optional override for the alert recipient email"
-        required: false
-        default: ""
 
 jobs:
   smoke-test:
@@ -22,12 +18,6 @@ jobs:
       contents: read
     env:
       BASE_URL: ${{ github.event.inputs.base_url || 'https://mattshan.dev' }}
-      SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-      SMTP_PORT: ${{ secrets.SMTP_PORT }}
-      SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-      SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      SMTP_FROM: ${{ secrets.SMTP_FROM }}
-      ALERT_EMAIL_TO: ${{ github.event.inputs.alert_email_to || secrets.SMOKE_TEST_ALERT_EMAIL_TO }}
 
     steps:
       - name: Checkout code
@@ -52,19 +42,3 @@ jobs:
 
       - name: Run Playwright smoke test
         run: pnpm run test:e2e
-
-      - name: Send failure email
-        if: ${{ failure() && env.SMTP_SERVER != '' && env.SMTP_USERNAME != '' && env.SMTP_PASSWORD != '' && env.ALERT_EMAIL_TO != '' }}
-        uses: dawidd6/action-send-mail@v16
-        with:
-          server_address: ${{ env.SMTP_SERVER }}
-          server_port: ${{ env.SMTP_PORT || 587 }}
-          username: ${{ env.SMTP_USERNAME }}
-          password: ${{ env.SMTP_PASSWORD }}
-          subject: Daily smoke test failed for ${{ env.BASE_URL }}
-          to: ${{ env.ALERT_EMAIL_TO }}
-          from: ${{ env.SMTP_FROM || env.SMTP_USERNAME }}
-          body: |
-            The daily Playwright smoke test failed for ${{ env.BASE_URL }}.
-            Repository: ${{ github.repository }}
-            Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
