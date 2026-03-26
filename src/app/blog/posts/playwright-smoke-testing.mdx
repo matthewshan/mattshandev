@@ -1,0 +1,147 @@
+---
+title: "Adding Playwright Smoke Tests to My Portfolio"
+publishedAt: "2026-03-26"
+summary: "How I added Playwright smoke tests to my portfolio site and wired them into both PR checks and a daily production health check via GitHub Actions."
+tag: "Engineering"
+---
+
+## Why Bother With Tests for a Personal Site?
+
+At the end of my [first post](/blog/building-portfolio-site), I listed a few things I still wanted to do. One of them was adding Playwright testing so I wasn't relying only on lint and build checks to catch problems before merging. Another was some kind of recurring health check so the site would tell me when something drifts or breaks.
+
+Both of those turned out to be the same solution.
+
+## What I Wanted
+
+The goal was not full test coverage. This is a personal portfolio, not a production SaaS app. What I actually wanted was something narrow:
+
+- Verify that the main routes return a successful response and render a visible heading
+- Confirm that every blog post linked from the blog index actually opens
+- Run automatically on pull requests so broken posts don't get merged
+- Run daily against the live site so I know if something quietly breaks in production
+
+Playwright is a good fit here. It lets me write tests that check real browser behavior, and it has solid GitHub Actions support out of the box.
+
+## The Test File
+
+The smoke tests live in [`e2e/smoke.spec.ts`](https://github.com/matthewshan/mattshandev/blob/main/e2e/smoke.spec.ts). There are three tests.
+
+```ts
+test("the home page opens", async ({ page }) => {
+  await expectSuccessfulPageLoad(page, "/");
+  await expect(page).toHaveTitle(/.+/);
+});
+
+test("the blog index opens", async ({ page }) => {
+  await expectSuccessfulPageLoad(page, "/blog");
+  await expect(page.locator('a[href^="/blog/"]').first()).toBeVisible();
+});
+
+test("each blog page linked from the blog index opens", async ({ page }) => {
+  await expectSuccessfulPageLoad(page, "/blog");
+
+  const postPaths = await page
+    .locator('a[href^="/blog/"]')
+    .evaluateAll((links) =>
+      Array.from(
+        new Set(
+          links
+            .map((link) => link.getAttribute("href") ?? "")
+            .filter((href) => href.startsWith("/blog/") && href !== "/blog/"),
+        ),
+      ),
+    );
+
+  for (const postPath of postPaths) {
+    await expectSuccessfulPageLoad(page, postPath);
+    await expect(page.locator("article")).toBeVisible();
+  }
+});
+```
+
+The third test is the most useful one. It crawls the blog index, collects every distinct post link, and opens each one. If I write a post with broken MDX or a missing slug, this test will catch it.
+
+## The Config
+
+[`playwright.config.ts`](https://github.com/matthewshan/mattshandev/blob/main/playwright.config.ts) defaults to running against a local dev server at `127.0.0.1:3000`. When a `BASE_URL` environment variable is set, it skips starting the dev server and targets that URL instead.
+
+```ts
+const localBaseURL = `http://${localHost}:${localPort}`;
+const baseURL = process.env.BASE_URL || localBaseURL;
+
+webServer: process.env.BASE_URL
+  ? undefined
+  : {
+      command: `pnpm dev --hostname ${localHost} --port ${localPort}`,
+      url: localBaseURL,
+      reuseExistingServer: !process.env.CI,
+      timeout: 120_000,
+    },
+```
+
+This one config handles both environments cleanly — no separate configs, no duplication.
+
+## The GitHub Actions Workflows
+
+### PR Checks
+
+The existing [`pull-request.yml`](https://github.com/matthewshan/mattshandev/blob/main/.github/workflows/pull-request.yml) workflow runs on every pull request. I added the Playwright step there alongside lint and build:
+
+```yaml
+- name: Install Playwright browser
+  run: pnpm exec playwright install --with-deps chromium
+
+- name: Run Playwright smoke test
+  run: pnpm run test:e2e
+
+- name: Run build
+  run: pnpm run build
+```
+
+Only Chromium is installed — no need to test three browsers for a personal site. The test runs against a local dev server that Playwright spins up automatically because `BASE_URL` is not set in that job.
+
+### Daily Production Smoke Test
+
+The second workflow, [`daily-production-smoke-test.yml`](https://github.com/matthewshan/mattshandev/blob/main/.github/workflows/daily-production-smoke-test.yml), runs on a schedule every day at 13:00 UTC. It targets the live site by passing `BASE_URL`:
+
+```yaml
+name: Daily Production Smoke Test
+
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: "Base URL to test"
+        required: false
+        default: "https://mattshan.dev"
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ github.event.inputs.base_url || 'https://mattshan.dev' }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run test:e2e
+```
+
+Because `BASE_URL` is set, Playwright skips starting a dev server entirely and points straight at the live URL. The `workflow_dispatch` trigger is also useful — I can manually run it against a staging URL or a specific branch preview if I want to verify before merging something significant.
+
+## The Result
+
+Two things are now true that weren't before:
+
+1. If I write a blog post that breaks rendering, the PR check will catch it before it merges.
+2. If something drifts on the live site — a route breaks, a deploy goes wrong — I'll know about it within 24 hours instead of whenever I happen to visit.
+
+Not a bad return for a relatively small amount of setup.
