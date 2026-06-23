@@ -35,10 +35,18 @@ The setup itself was straightforward. I followed the template instructions and g
 
 At work, I have really seen and utilized the power of feeding LLM’s the right context. I wanted to do the same here with GitHub Copilot. At the time of writing, I used GPT 5.4 since it's powerful and cost-effective (though I typically use Claude Opus 4.6 at work for complex tasks). 
 
+<<<<<<< HEAD
 I created three .md files (with AI) in `docs/` of the repository. 
 - [docs/technical-overview.md](https://github.com/matthewshan/mattshandev/blob/main/docs/technical-overview.md) documents the repo’s technical setup and architecture.
 - [docs/page-component-map.md](https://github.com/matthewshan/mattshandev/blob/main/docs/page-component-map.md) provides a picture of how the codebase is structured. 
 - Finally, since I was using GitHub Copilot, I added this [.github/copilot-instructions.md](https://github.com/matthewshan/mattshandev/blob/main/.github/copilot-instructions.md) file. It tells Copilot toto use the above .md files, and make updates to them as we develop.
+=======
+I created two .md files (with AI) in `docs/` of the repository.
+- [docs/technical-overview.md](https://github.com/matthewshan/mattshandev/blob/main/docs/technical-overview.md) documents the repo’s technical setup and architecture.
+- [docs/page-component-map.md](https://github.com/matthewshan/mattshandev/blob/main/docs/page-component-map.md) provides a picture of how the codebase is structured.
+
+Finally, since I was using GitHub Copilot, I added a [.github/copilot-instructions.md](https://github.com/matthewshan/mattshandev/blob/main/.github/copilot-instructions.md) file. It tells Copilot to use the above .md files, and make updates to them as we develop.
+>>>>>>> 7035b63771b182da2c10d9697747d39df1c3afc7
 
 Once the architecture and conventions were documented, a lot of the repetitive cleanup work becomes much easier to hand off to Copilot.
 
@@ -108,7 +116,11 @@ Once this was set up, pushing new commits to `main` would "automagically" build 
 
 ### 5. Add pull request checks (I don't always trust myself)
 
+<<<<<<< HEAD
 One thing Vercel does very well is making this process effortless. That is great right up until you realize it is also very easy to ship something broken. One of these late evenings, I would have definitely forget to lint and build the code before pushing.
+=======
+One thing Vercel does very well is making this process effortless. That is great right up until you realize it is also very easy to ship something broken. One of these late evenings, I would have definitely forgotten to lint and build the code before pushing.
+>>>>>>> 7035b63771b182da2c10d9697747d39df1c3afc7
 
 So I added some standard guardrails:
 - You are not allowed to push to `main` directly. You must create a pull request.
@@ -119,7 +131,7 @@ So I added some standard guardrails:
 
 ## 6. Write this blog post
 
-Once I got the site up and running, I needed a blog post to make it look alive. I was always the guy who despised writing essays in school, so I decided to write this post with some AI help
+Once I got the site up and running, I needed a blog post to make it look alive. I was always the guy who despised writing essays in school, so I decided to write this post with some AI help.
 
 First I typed up an outline and drafted sections I know I wanted to write by hand. 
 
