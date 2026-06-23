@@ -36,6 +36,7 @@ export default function Post({ post, thumbnail, direction }: PostProps) {
           src={post.metadata.image}
           alt={`Thumbnail of ${post.metadata.title}`}
           aspectRatio="16 / 9"
+          objectFit={post.metadata.imageFit === "contain" ? "contain" : undefined}
         />
       )}
       <Row fillWidth>

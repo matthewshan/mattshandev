@@ -16,6 +16,7 @@ export type PostMetadata = {
   publishedAt: string;
   summary: string;
   image?: string;
+  imageFit?: string;
   images: string[];
   tags?: string[];
   team: TeamMember[];
@@ -55,6 +56,7 @@ function readMDXFile(filePath: string) {
     publishedAt: data.publishedAt,
     summary: data.summary || "",
     image: data.image || "",
+    imageFit: data.imageFit || "",
     images: data.images || [],
     tags,
     team: data.team || [],

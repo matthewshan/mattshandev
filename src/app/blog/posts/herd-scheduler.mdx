@@ -1,0 +1,105 @@
+---
+title: "Herd Scheduler: a self-hosted way to find a time that works"
+publishedAt: "2026-06-23"
+summary: "Why I built a small, portable group-scheduling app where guests can vote without signing up — and how it works."
+image: "/images/blog/herd-scheduler/thumbnail.png"
+imageFit: "contain"
+tags:
+  - "Next.js"
+  - "TypeScript"
+  - "Self-Hosting"
+  - "Postgres"
+  - "k3s"
+---
+
+{/*
+  NOTE TO SELF: prose below is scaffolding — rewrite in my own voice.
+  GIFs already live in /public/images/blog/herd-scheduler/.
+*/}
+
+## Why I made this
+
+{/* TODO (intro): the itch. Existing tools (Doodle/when2meet) felt heavy,
+    ad-laden, or wanted accounts from everyone. I wanted:
+    - guests can vote with zero sign-up
+    - I can self-host it (k3s at home, any Postgres)
+    - it looks decent on a phone, since that's where people actually tap
+    Keep it personal — a specific "we couldn't pin down a game night" story. */}
+
+A short, honest paragraph on the problem and what I wanted instead.
+
+## How to use it
+
+### 1. Create a poll
+
+Pick a few candidate days, set a time range, optionally make responses
+anonymous, and you get a shareable link.
+
+<Row fillWidth horizontal="center" marginTop="8" marginBottom="16">
+  <Media src="/images/blog/herd-scheduler/create-flow.gif" alt="Creating a poll: title, multi-select calendar, time range, then a share link" enlarge radius="m" border="neutral-alpha-medium" maxWidth={26} sizes="(max-width: 480px) 100vw, 420px" />
+</Row>
+
+### 2. Share it — anyone can vote
+
+The link works for everyone. Guests just type a name; no account required.
+For each slot you tap **yes / if-need-be / no**, then submit.
+
+<Row fillWidth horizontal="center" marginTop="8" marginBottom="16">
+  <Media src="/images/blog/herd-scheduler/vote-flow.gif" alt="Voting as a guest: name yourself, mark each slot, submit" enlarge radius="m" border="neutral-alpha-medium" maxWidth={26} sizes="(max-width: 480px) 100vw, 420px" />
+</Row>
+
+{/* TODO: maybe mention the guest-identity perk — close the tab, come back,
+    your answers are still there (per-browser key). */}
+
+### 3. See results and lock it in
+
+Results sort by best fit (`yes*3 + maybe - no*4`), flag slots that work for
+everyone, and the host can finalize the winning time.
+
+<Row fillWidth horizontal="center" marginTop="8" marginBottom="16">
+  <Media src="/images/blog/herd-scheduler/results-finalize.gif" alt="Results sorted by best fit; host finalizes the winning slot" enlarge radius="m" border="neutral-alpha-medium" maxWidth={26} sizes="(max-width: 480px) 100vw, 420px" />
+</Row>
+
+### 4. Keep track of your polls
+
+Signed in, you get **Your polls** and **Joined** tabs; guests get a list of
+polls they've opened on this device.
+
+<Row fillWidth horizontal="center" marginTop="8" marginBottom="16">
+  <Media src="/images/blog/herd-scheduler/home-tabs.gif" alt="Signed-in home with Your polls and Joined tabs" enlarge radius="m" border="neutral-alpha-medium" maxWidth={26} sizes="(max-width: 480px) 100vw, 420px" />
+</Row>
+
+## Tech stack
+
+The whole thing is built to be **portable** — one container image, any Postgres
+via a single `DATABASE_URL`, no host-specific services.
+
+- **Next.js (App Router, TypeScript)** — `output: 'standalone'` for a small,
+  self-contained production image. Server components + server actions, no
+  separate API layer.
+- **PostgreSQL via Prisma** — single `DATABASE_URL`, no provider-specific
+  features. Times stored in UTC, displayed in the poll's timezone.
+- **Auth.js v5 + Google OIDC** — Prisma adapter with database sessions.
+  Voting needs no account; creating polls is access-gated.
+- **Tailwind CSS** — design tokens from a Claude Design handoff, with a
+  `data-theme` light/dark toggle.
+- **Self-hosted fonts** (`next/font`: Space Grotesk + Inter) and **lucide-react**
+  icons — bundled into the image, no runtime CDN.
+
+### Deploying it
+
+{/* TODO: the fun part — runs on my home k3s cluster, image from ghcr.io,
+    public HTTPS through a Cloudflare Tunnel. Also runs fine on Vercel+Supabase
+    or any plain container runtime, on purpose (kept nothing host-specific). */}
+
+Self-hosted on k3s at home; image pulled from `ghcr.io`, public HTTPS via a
+Cloudflare Tunnel. Because nothing is host-specific, it also runs on a plain
+container runtime or Vercel + Supabase.
+
+### A note on the GIFs
+
+Every flow GIF above is captured automatically — Playwright drives the real app
+and ffmpeg renders an optimized GIF. So the media stays cheap to refresh
+whenever the UI changes.
+
+{/* TODO (outro): what I'd do next / what I learned. Link to the repo. */}
